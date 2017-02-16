@@ -2,7 +2,7 @@
 var meta = function() {
 // ==UserScript==
 // @name         mb. MASS MERGE RECORDINGS
-// @version      2016.6.15
+// @version      2017.2.16
 // @changelog    https://github.com/jesus2099/konami-command/commits/master/mb_MASS-MERGE-RECORDINGS.user.js
 // @description  musicbrainz.org: Merges selected or all recordings from release A to release B
 // @homepage     http://userscripts-mirror.org/scripts/show/120382
@@ -339,8 +339,9 @@ function cleanTrack(track, editID, retryCount) {
 	} else {
 		var lengthcell = track.tr.querySelector("td.treleases");
 		if (track.length && lengthcell) {
-			lengthcell.replaceChild(document.createTextNode(time(track.length, true)), lengthcell.firstChild);
+			lengthcell.replaceChild(document.createTextNode(time(track.length)), lengthcell.firstChild);
 			lengthcell.style.setProperty("font-family", "monospace");
+			lengthcell.style.setProperty("text-align", "right");
 		}
 	}
 }
@@ -744,8 +745,9 @@ function buildMergeForm(loc, rem) {
 		}
 		var reclen = remrec.appendChild(document.createElement("span"));
 		reclen.style.setProperty("float", "right");
+		reclen.style.setProperty("margin-left", "1em");
 		reclen.style.setProperty("font-family", "monospace");
-		reclen.appendChild(document.createTextNode(" " + time(remTrack.length, true)));
+		reclen.appendChild(document.createTextNode(time(remTrack.length)));
 		if (typeof locTrack.length == "number" && typeof remTrack.length == "number") {
 			var delta = Math.abs(locTrack.length - remTrack.length);
 			if (delta != false && delta > safeLengthDelta*1000) {
